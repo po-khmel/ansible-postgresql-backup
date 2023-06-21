@@ -1,6 +1,6 @@
 usegalaxy-it.postgresql_backup
 =========
-The role creates daily and weekly cron jobs to do a PostgreSQL dump that will be stored on the backup server and cleans up old backups.  
+The role creates cron jobs to do a PostgreSQL dump daily and weekly. The backups will be stored on the backup server. Old backups are cleaned.  
 
 Requirements
 ------------
