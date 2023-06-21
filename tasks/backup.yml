@@ -1,4 +1,9 @@
 ---
+- name: Create postgres user
+  user:
+    name: "{{ postgresql_user_name }}"
+    home: /var/lib/pgsql
+
 - name: Create backup dirs and scripts dir
   file:
     owner: "{{ postgresql_user_name }}"
