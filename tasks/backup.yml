@@ -1,40 +1,30 @@
 ---
-- name: Create backup scripts dir
+- name: Create backup dirs and scripts dir
   file:
     owner: "{{ postgresql_user_name }}"
     group: "{{ postgresql_user_name }}"
-    path: "{{ backup_scripts_path }}"
+    path: "{{ item }}"
     mode: 0755
     state: directory
+  with_items:
+    - "{{ backup_scripts_path }}"
+    - "{{ backup_dir_daily }}"
+    - "{{ backup_dir_weekly }}"
 
 - name: Template clean backup script
   template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: ansible_postgres_backup_clean.sh.j2
+    dest: "{{ backup_scripts_path }}/ansible_postgres_backup_clean.sh"
     owner: "{{ postgresql_user_name }}"
     group: "{{ postgresql_user_name }}"
     mode: 0755
     backup: true
-  with_items:
-    - {
-        src: ansible_postgres_backup_clean.sh.j2,
-        dest: "{{ backup_scripts_path }}/ansible_postgres_backup_clean.sh",
-      }
 
 - name: Add cron jobs
   cron:
-    name: "{{ item.name }}"
-    # cron_file: "{{ item.cron_file }}"
+    name: "PostgreSQL Backup Clean"
     user: postgres
-    minute: "{{ item.minute }}"
-    hour: 1
-    weekday: "{{ item.weekday }}"
-    job: "{{ item.job }}"
-  with_items:
-    - {
-        name: "PostgreSQL Backup Clean",
-        # cron_file: ansible_postgresql_backup_daily,
-        minute: "10",
-        weekday: "6",
-        job: "{{ backup_scripts_path }}/ansible_postgres_backup_clean.sh",
-      }
+    minute: "10"
+    hour: "1"
+    weekday: "6"
+    job: "{{ backup_scripts_path }}/ansible_postgres_backup_clean.sh"

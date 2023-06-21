@@ -31,23 +31,20 @@
 - name: Add cron jobs
   cron:
     name: "{{ item.name }}"
-    # cron_file: "{{ item.cron_file }}"
     user: postgres
     minute: "{{ item.minute }}"
-    hour: 1
+    hour: "1"
     weekday: "{{ item.weekday }}"
     job: "{{ item.job }}"
   with_items:
     - {
         name: "PostgreSQL Daily Backup",
-        # cron_file: ansible_postgresql_backup_daily,
         minute: "0",
         weekday: "*",
         job: "{{ backup_scripts_path }}/ansible_postgres_backup_daily.sh",
       }
     - {
         name: "PostgreSQL Weekly Backup",
-        # cron_file: ansible_postgresql_backup_weekly,
         minute: "5",
         weekday: "6",
         job: "{{ backup_scripts_path }}/ansible_postgres_backup_weekly.sh",
