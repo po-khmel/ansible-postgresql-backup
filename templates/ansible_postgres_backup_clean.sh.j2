@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Define the directory where the files are located
+WEEKLY_DIR="{{ backup_dir_weekly }}"
+DAILY_DIR="{{ backup_dir_daily }}"
+
+# Find and delete files older than 60 days
+find $WEEKLY_DIR -type f -mtime +60 -exec rm {} \;
+find $DAILY_DIR -type f -mtime +60 -exec rm {} \;

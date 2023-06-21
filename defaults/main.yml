@@ -1,0 +1,10 @@
+postgresql_user_name: postgres
+backup_scripts_path: /var/lib/pgsql/scripts
+
+local_backup_dir: /var/lib/pgsql/backups
+backup_dir_daily: /data/backups/daily
+backup_dir_weekly: /data/backups/weekly
+
+backup_ip: "{{ groups['backup'][0] }}"
+
+db_name: "galaxy"

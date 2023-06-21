@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Define variables
+LOCAL_BACKUP_DIR="{{ local_backup_dir }}"
+TARGET_VM="{{ postgresql_user_name }}@{{ backup_ip }}"
+TARGET_DIR="{{ backup_dir_weekly }}"
+TIMESTAMP=$(date +%Y%m%d%H%M%S)
+DATABASE="{{ db_name }}"
+
+# Create the backup
+pg_dump -U postgres -Fc $DATABASE > $LOCAL_BACKUP_DIR/$TIMESTAMP.backup
+
+# Copy the backup to the target VM
+scp $LOCAL_BACKUP_DIR/$TIMESTAMP.backup $TARGET_VM:$TARGET_DIR
+
+# Remove the local backup
+rm $LOCAL_BACKUP_DIR/$TIMESTAMP.backup
