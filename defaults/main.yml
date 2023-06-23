@@ -7,4 +7,6 @@ backup_dir_weekly: /data/backups/weekly
 
 backup_ip: "{{ groups['backup'][0] }}"
 
+cleanup_log_path: /tmp/cron_cleanup
+backup_log_path: /tmp/cron_backup
 db_name: "galaxy"

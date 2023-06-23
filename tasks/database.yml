@@ -9,6 +9,7 @@
   with_items:
     - "{{ local_backup_dir }}"
     - "{{ backup_scripts_path }}"
+    - "{{ backup_log_path }}"
 
 - name: Template backup scripts
   template:
@@ -41,11 +42,11 @@
         name: "PostgreSQL Daily Backup",
         minute: "0",
         weekday: "*",
-        job: "{{ backup_scripts_path }}/ansible_postgres_backup_daily.sh",
+        job: "{{ backup_scripts_path }}/ansible_postgres_backup_daily.sh >> {{ backup_log_path }}/cron_backup.log 2>&1",
       }
     - {
         name: "PostgreSQL Weekly Backup",
         minute: "5",
         weekday: "6",
-        job: "{{ backup_scripts_path }}/ansible_postgres_backup_weekly.sh",
+        job: "{{ backup_scripts_path }}/ansible_postgres_backup_weekly.sh >> {{ backup_log_path }}/cron_backup.log 2>&1",
       }

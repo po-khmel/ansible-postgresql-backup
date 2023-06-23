@@ -25,7 +25,8 @@ Role Variables
 `local_backup_dir` - path to dump postgres locally  
 `backup_dir_daily` - directory for daily backups on a backup VM  
 `backup_dir_weekly` - directory for weekly backups on a backup VM  
-
+`cleanup_log_path` - path to store cleanup cron job logs
+`backup_log_path` - path to store backup cron jobs logs
 
 Example Playbook
 ----------------

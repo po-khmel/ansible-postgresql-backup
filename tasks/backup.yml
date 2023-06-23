@@ -15,6 +15,7 @@
     - "{{ backup_scripts_path }}"
     - "{{ backup_dir_daily }}"
     - "{{ backup_dir_weekly }}"
+    - "{{ cleanup_log_path }}"
 
 - name: Template clean backup script
   template:
@@ -32,4 +33,4 @@
     minute: "10"
     hour: "1"
     weekday: "6"
-    job: "{{ backup_scripts_path }}/ansible_postgres_backup_clean.sh"
+    job: "{{ backup_scripts_path }}/ansible_postgres_backup_clean.sh >> {{ cleanup_log_path }}/cron_cleanup.log 2>&1"
