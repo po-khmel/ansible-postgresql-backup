@@ -48,6 +48,22 @@ How to use the role:
   roles:
      - usegalaxy-it.postgresql_backup
 ```
+Database Restoration Workflow
+----------------
+To restore the backup created using the `pg_dump` command, you can follow these steps:
+
+1. Ensure that PostgreSQL is installed and running.
+2. Transfer the backup file to the server where PostgreSQL is installed.
+3. To restore the backup file, use the `pg_restore` command.
+```bash
+pg_restore -U <postgresql_user_name> -C -d <database_name> <backup_file>
+```
+- `-U <postgresql_user_name>`: PostgreSQL user name to connect to the database.  
+- `-C`: Creates the database before restoring the backup.  
+- `-d <database_name>`: the name of the database to which the backup should be restored. Use the same name for the database as was used for the dump.  
+- `<backup_file>`: the path and name of the backup file to be restored.
+
+You can verify the restoration by connecting to the PostgreSQL database and querying the data.
 
 License
 -------
